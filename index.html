@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      /* 이서윤체 폰트 적용을 위한 코드 */
+      @font-face {
+        font-family: "LeeSeoyun";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff")
+          format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+      /* body태그 자체에 css 요소 부여 */
+        body {
+            font-family: "LeeSeoyun";
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            background-image: url("./background.png");
+        }   
+        
+        .container {
+            width: 390px;
+	        background-color: #e0b2da;
+            //#ff9f75;//
+	        height: 100%;
+        }
+
+        .photos {
+            margin-top: 30px;
+        }
+
+        .photo-frame {
+            background-color: white;
+	        margin: 15px 20px;
+	        height: 200px;
+            background-size: cover;
+            position: relative;
+            cursor: pointer; //마우스가 사진 위로 올라가면 포인터 아이콘으로 바뀌도록
+        }
+
+
+        .header {
+        	display: flex;
+        	flex-direction: column;
+        	align-items: center;
+        }
+
+        .f-header {
+            margin: 0 10 0 0px;
+            font-size: 25px;
+        	font-weight: 900;
+        	color: white;
+        }
+        /* 아래 영역 전체는, flexible하게 하되 그 내부 아이템들은 세로로 쌓을거야 */
+        /* 근데 모두 가운데 정렬 했으면 좋겠어! */
+        .footer {
+        	display: flex;
+        	flex-direction: column;
+        	align-items: center;
+        }
+
+        /* 아래 영역의 제목 부분은 폰트가 좀 두껍고, 사이즈는 25픽셀! 흰색으로 */
+        .f-title {
+        	font-size: 25px;
+        	font-weight: 900;
+        	color: white;
+        }
+
+        /* 아래 영역의 날짜 부분은 폰트가 중간 두께고, 사이즈는 15픽셀! 흰색으로 */
+        .f-date {
+        	font-size: 15px;
+        	font-weight: 500;
+        	color: white;
+        }
+
+        #image1 {
+	        background-image: url("./KakaoTalk_20230215_172627484_03.jpg");
+        }
+
+        #image2 {
+        	background-image: url("./IMG_8072.jpg");
+        }
+
+        #image3 {
+        	background-image: url("./IMG_8094.jpg");
+        }
+
+        #image4 {
+        	background-image: url("./IMG_8097.jpg");
+        }
+
+        .photo_description {
+            /* 배경은 검게, 글자는 흰 색으로 */
+            color: white;
+            background-color: black;
+            font-size: 60%;
+
+            /* 가로 너비는 내부 콘텐츠에 딱 맞게! */
+            width: fit-content;
+            padding: 0 20px;
+            margin-bottom: 10px;
+
+            /* 경계선 */
+            border-radius: 30px;
+            position: absolute;
+            bottom: 0;
+            transform: translate(-50%);
+            left: 50%;
+            opacity: 0;
+            
+        }
+        
+        .video {
+            width: 100%;
+            height: 100%;
+        }
+
+        .showText {
+            opacity: 0;
+        }
+
+        .hideText {
+            opacity: 1;
+            transition: opacity 0.5s linear;
+        }
+    </style>
+    <script>
+        // 텍스트가 보여지는 기능
+        // 1. 몇 번째 사진에 마우스가 올라갔는지 확인(if문)
+        // 2. 해당 사진을 찾아 hideText class를 지워주고, showText는 삽입해줌
+        function showText(number) {
+          if (number === 1) {
+            document.querySelector("#desc1").classList.remove("hideText");
+            document.querySelector("#desc1").classList.add("showText");
+          } else if (number === 2) {
+            document.querySelector("#desc2").classList.remove("hideText");
+            document.querySelector("#desc2").classList.add("showText");
+          } else {
+            document.querySelector("#desc3").classList.remove("hideText");
+            document.querySelector("#desc3").classList.add("showText");
+          }
+        }
+
+        // 텍스트가 감춰지는 기능
+        // 1. 몇 번째 사진에서 마우스가 벗어났는지 확인(if문)
+        // 2. 해당 사진을 찾아 shotText class를 지워주고, hideText는 삽입해줌
+        function hideText(number) {
+          if (number === 1) {
+            document.querySelector("#desc1").classList.remove("showText");
+            document.querySelector("#desc1").classList.add("hideText");
+          } else if (number === 2) {
+            document.querySelector("#desc2").classList.remove("showText");
+            document.querySelector("#desc2").classList.add("hideText");
+          } else {
+            document.querySelector("#desc3").classList.remove("showText");
+            document.querySelector("#desc3").classList.add("hideText");
+          }
+        }
+
+        // 클릭 기능
+        // 1. 선택된 사진의 숫자를 가진 텍스트를 alert 형태로 출력해줌
+        function alertText(number) {
+        	alert(`${number}번째 추억이에요! 눌러주셔서 감사합니다 :)`);
+        }
+        
+    </script>
+    
+</head>
+<body>
+    <div class = "container">
+        <div class="header">
+            <p class="f-header">Oh! Happy Day</p>
+        </div>
+        <div class="photos">
+            <div 
+            id="image1" 
+            class="photo-frame" 
+            onmouseover="hideText(1)"
+            onmouseout="showText(1)"
+            onclick="alertText(1)"> 
+                <span id="desc1" class="photo_description">
+                    23년 첫 팀장 모임😊
+                </span>    
+            </div>
+            <div 
+            id="image2" 
+            class="photo-frame" 
+            onmouseover="hideText(2)"
+            onmouseout="showText(2)"
+            onclick="alertText(2)">
+                <span id="desc2" class="photo_description">
+                    크리스마스 굿즈! 이뻐-!
+                </span>
+            </div>
+            <div 
+            id="image3" 
+            class="photo-frame"
+            onmouseover="hideText(3)"
+            onmouseout="showText(3)"
+            onclick="alertText(3)">
+                <span id="desc3" class="photo_description">
+                    크리스마스 굿즈! 이뻐-!!
+                </span>
+            </div>
+            <div class="photo-frame">
+                <iframe
+                    src="./test.mp4"
+                    frameborder="0"
+                    class="video"
+                    sandbox
+                ></iframe>
+            </div>
+        </div>
+        <div class="footer">
+            <p class="f-title">Oh! Happy Day</p>
+            <p class="f-date">2023.02.17</p>
+        </div>
+    </div>
+</body>
+</html>
